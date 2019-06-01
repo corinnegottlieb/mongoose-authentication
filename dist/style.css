@@ -1,0 +1,85 @@
+body{
+    text-align: center;
+    font-family: 'Gill Sans';
+    color: black;
+    background-image: url('abstract-bamboo.jpg');
+    font-size: 32px;
+}
+
+#container{
+    display: grid;
+    justify-content: center;
+}
+
+.inner-container{
+    color: black;
+    background-color: white;
+    opacity: 0.8;
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 15px;
+    padding: 20px;
+    box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+}
+
+.input-box{
+    display:grid;
+    grid-auto-rows: repeat(3, 1fr);
+    grid-gap: 10px; 
+}
+
+#logo{
+    color:white;
+}
+
+.inputs{
+    border: none;
+    background-color:white;
+    color: black;
+    font-family: 'Gill Sans';
+    letter-spacing: 1px;
+    font-size:16px;
+    border-bottom: 0.5px solid grey;
+}
+
+::placeholder{
+    color: black;
+    font-family: 'Gill Sans';
+    letter-spacing: 1px;
+    font-size:16px;
+}
+
+button{
+    background-color: #00d2d3;
+    color: black;
+    font-family: 'Gill Sans';
+    /* letter-spacing: 1px; */
+    font-size: 20px;
+    /* padding: 10px; */
+}
+
+#enter-button{
+    margin: 20px 30px;
+}
+
+#profile{
+    background-color: white;
+    opacity: 0.8; 
+}
+.dashboard{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr)
+}
+
+.user-row{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr) 
+}
+
+#addFriend{
+    font-weight: bold;
+}
+
+#unFriend{
+    font-weight: bold;
+}

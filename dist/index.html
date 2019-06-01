@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+    <title>Friends</title>
+</head>
+
+<body>
+    <h1 id="logo">Bambooster</h1>
+    <div id="container"></div>
+
+
+
+    <script id="landing-template" type="text/x-handlebars-template">
+        <div class='inner-container'>
+            <div id="header">
+                <h3>{{title}}</h3>
+                <span>{{prompt}}</span>
+                <button onClick={{promptFunction}}>{{promptButton}}</button>
+                <hr>
+            </div>
+            <div class='input-box'>
+                <input class="inputs" type='text' id='user' placeholder='Username'>
+                <input class="inputs" type='password' id='password' placeholder='Password'>
+                <button id="enter-button" onClick='{{functionName}}'>{{title}}</button>
+        </div>
+    </div>
+            </script>
+    <script id="profile-template" type="text/x-handlebars-template">
+        <div id="profile">
+      <h3>Welcome, {{username}}!</h3>
+      <div id='{{user.username}}' class="dashboard">
+        <div class="users-list">
+            <h4>These are your friends:</h4>
+            {{#each friends}}
+                <div class="user-row">
+                    <span class="username">{{this}}</span>
+                    <div id='unFriend'>-</div>
+                </div>
+            {{/each}}
+        </div>
+        <div class="users-list">
+            <h4>These could be your friends:</h4>
+            {{#each otherUsers}}
+                <div class="user-row">
+                    <span class="username">{{username}}</span>
+                    <div id='addFriend'>+</div>
+                </div>
+            {{/each}}
+        </div>
+      </div>
+      </div>
+                    </script>
+    <script src="/jquery/dist/jquery.js"></script>
+    <script src="/handlebars/dist/handlebars.js"></script>
+    <script src="Renderer.js"></script>
+    <script src="UserManager.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
