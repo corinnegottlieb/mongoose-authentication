@@ -10,9 +10,7 @@ let Schema = mongoose.Schema
 let userSchema = new Schema({
     username: { type: String, unique: true },
     password: { type: String },
-    firstName: String,
-    lastName: String,
-    friends: Array
+    numLogIns: Number
 })
 
 // just before save run this function and give me the next function the call

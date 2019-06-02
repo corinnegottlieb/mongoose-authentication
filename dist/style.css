@@ -3,7 +3,11 @@ body{
     font-family: 'Gill Sans';
     color: black;
     background-image: url('abstract-bamboo.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     font-size: 32px;
+    height: 100vh;
 }
 
 #container{
@@ -65,21 +69,13 @@ button{
 #profile{
     background-color: white;
     opacity: 0.8; 
-}
-.dashboard{
     display: grid;
-    grid-template-columns: repeat(2, 1fr)
+    padding: 20px;
+
 }
 
-.user-row{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr) 
-}
-
-#addFriend{
-    font-weight: bold;
-}
-
-#unFriend{
-    font-weight: bold;
+#logout-button{
+    margin: 30px 100px;
+    padding: 10px;
+  
 }

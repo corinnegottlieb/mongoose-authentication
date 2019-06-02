@@ -13,18 +13,16 @@ router.post('/login', function(req, res){
     User.findOne({username: username}, function(err, user){
         if(err){
             console.log(err)
-            return res.status(500).send()
+            return res.status(500).send('error')
         }
         if(!user){
             // user not found
-            return res.status(404).send()
+            return res.status(404).send('user not found')
         }
         user.comparePassword(password, function(err, isMatch){
             if(isMatch && isMatch == true){
-                // need to store the user in the session
                 req.session.user = user
                 return res.send(user)
-
             }
             else {
                 return res.status(401).send()
@@ -38,16 +36,14 @@ router.post('/register', function(req, res){
         let newUser = new User({
             username: req.body.username,
             password: req.body.password,
-            // firstName: req.body.firstName,
-            // lastName: req.body.lastName
+            numLogIns: 0
         })
         newUser.save(function(err, savedUser){
             if(err){
                 console.log(err)
-                return res.status(500).send()
-            
+                return res.status(500).send()         
             }
-            return res.status(200).send()
+            return res.status(200).send(`username ${savedUser.username} created`)
         })
 })
 
@@ -57,20 +53,20 @@ router.get('/dashboard', function(req, res){
         return res.status(401).send()
     }
     else{
-        let user = req.session.user
-        User.find({}).exec(function(err, users){
-        res.send({users, user})
-    })
-}})
+        res.send(req.session.user)
+    }})
 
 
 router.get('/logout', function(req, res){
     req.session.destroy()
-    return res.status(200).send()
+    return res.status(200).send('logged out')
 })
 
-router.put('/addFriend/:username/:friend', function(req, res){
-User.findOneAndUpdate(req.params.username, {$push: {friends: req.params.friend}}, {new:true}).exec( function(err, userData){
+router.put('/update/:username', function(req, res){
+    console.log(req.session)
+  let logIns = req.session.user.numLogIns+1
+  console.log(logIns)
+User.findOneAndUpdate({username: req.params.username}, {numLogIns: logIns}, {new:true}).exec( function(err, userData){
     if(err){
         return res.send(err)
     }

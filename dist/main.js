@@ -4,7 +4,7 @@ const userManager = new UserManager()
 const logInData = {
     id: "login",
     title: "Log In",
-    prompt: "New to Friendster?",
+    prompt: "New to Bambooster?",
     promptFunction: 'loadSignUp()',
     promptButton: "Sign Up",
     functionName: "logIn()",
@@ -19,12 +19,16 @@ const signUpData = {
     functionName: "signUp()",
 }
 
-
+const loadProfile = (userData) => {
+    $('#container').empty()
+    console.log(userData)
+    render.profileRenderer(userData)    
+}
 const loadLogIn = () => {
     $('#container').empty()
+    // userManager.user.username.length > 0 ? loadProfile(userManager.user) :
     render.landingRenderer(logInData)
 }
-
 
 const loadSignUp = () => {
     $('#container').empty()
@@ -33,47 +37,27 @@ const loadSignUp = () => {
 
 loadLogIn()
 
-
-const loadProfile = (userData) => {
-    $('#container').empty()
-    console.log(userData)
-    render.profileRenderer(userData)    
-}
-
-const logIn = async function () {
-    let userData = {
+const signUp = function () {
+    let userInput = {
         username: $("#user").val(),
         password: $("#password").val()
     }
-    await userManager.getUserData(userData)
-    loadProfile(userManager.user)
-}
-
-const signUp = function () {
-    let userData = {
-        username: $("#user").val(),
-        password: $("#password").val(),
-    }
-    $.post('/register', userData, function () {
+    $.post('/register', userInput, function () {
         loadLogIn()
     })
 }
 
 
-
-
-
-
-$('body').on('click', '#addFriend', async function () {
-    // let username = $('.dashboard').attr('id')
-    // console.log(username)
-    let friend = $(this).closest('.user-row').find('.username').text()
- await   userManager.addFriend(friend)
+const logIn = async function () {
+    let userInput = {
+        username: $("#user").val(),
+        password: $("#password").val()
+    }
+    await userManager.getUserData(userInput)
     loadProfile(userManager.user)
-})
+}
 
-$('body').on('click', '#unFriend', function () {
-    let user = $(this).closest('.user-row').find('.username').text()
-    console.log(`${user} removed from friends`)
-})
-
+const logOut = async function () {
+ $.get('/logout')
+loadLogIn()
+}
