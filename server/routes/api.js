@@ -7,6 +7,13 @@ router.get('/', function (req, res) {
     res.send("Welcome!")
 })
 
+// function checkSession( req, res, next ) {
+//     if (document.cookie..qid  ) {
+//         next()
+//     }
+
+// }
+
 router.post('/login', function(req, res){
     let username = req.body.username
     let password = req.body.password
