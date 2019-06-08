@@ -6,13 +6,13 @@ router.get('/', function (req, res) {
     console.log('someone has come into the server')
     res.send("Welcome!")
 })
-
-// function checkSession( req, res, next ) {
-//     if (document.cookie..qid  ) {
-//         next()
-//     }
-
-// }
+router.get('/checkSession', function(req, res){
+    if(req.session.user){
+        console.log(req.session.user)
+        res.json({session: true})
+    }
+    else res.json({session: false})
+})
 
 router.post('/login', function(req, res){
     let username = req.body.username

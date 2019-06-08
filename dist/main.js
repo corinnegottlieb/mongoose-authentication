@@ -35,7 +35,13 @@ const loadSignUp = () => {
     render.landingRenderer(signUpData)
 }
 
-loadLogIn()
+const checkLoggedIn = async () => {
+  let session =  await $.get('/checkSession')
+  console.log(session)
+  session.session ? loadProfile() : loadLogIn()
+}
+
+checkLoggedIn()
 
 const signUp = function () {
     let userInput = {
