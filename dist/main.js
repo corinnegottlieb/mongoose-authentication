@@ -36,9 +36,9 @@ const loadSignUp = () => {
 }
 
 const checkLoggedIn = async () => {
-  let session =  await $.get('/checkSession')
-  console.log(session)
-  session.session ? loadProfile() : loadLogIn()
+ let session = await $.get('/checkSession')
+ console.log(session)
+  session.session ? loadProfile(session.user) : loadLogIn()
 }
 
 checkLoggedIn()
@@ -60,6 +60,7 @@ const logIn = async function () {
         password: $("#password").val()
     }
     await userManager.getUserData(userInput)
+    console.log(userManager.user)
     loadProfile(userManager.user)
 }
 

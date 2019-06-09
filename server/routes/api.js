@@ -8,10 +8,11 @@ router.get('/', function (req, res) {
 })
 router.get('/checkSession', function(req, res){
     if(req.session.user){
-        console.log(req.session.user)
-        res.json({session: true})
+        console.log(req.session)
+        res.json({session: true,
+        user: req.session.user})
     }
-    else res.json({session: false})
+    else res.send({session: false})
 })
 
 router.post('/login', function(req, res){
@@ -28,7 +29,9 @@ router.post('/login', function(req, res){
         }
         user.comparePassword(password, function(err, isMatch){
             if(isMatch && isMatch == true){
+                console.log(req.sessionID)
                 req.session.user = user
+                req.session.userId = user._id
                 return res.send(user)
             }
             else {
@@ -43,25 +46,29 @@ router.post('/register', function(req, res){
         let newUser = new User({
             username: req.body.username,
             password: req.body.password,
-            numLogIns: 0
+            numLogIns: 1
         })
-        newUser.save(function(err, savedUser){
+        newUser.save(function(err, user){
             if(err){
                 console.log(err)
                 return res.status(500).send()         
             }
-            return res.status(200).send(`username ${savedUser.username} created`)
+            else{
+                req.session.userId = user._id
+            return res.status(200).send(`username ${user.username} created`)}
         })
 })
 
 router.get('/dashboard', function(req, res){
-    if(!req.session.user){
+    if(!req.session.userId){
         // unauthorized
         return res.status(401).send()
     }
     else{
-        res.send(req.session.user)
-    }})
+        User.findById(req.session.userId, function(err, user){
+        res.send(user)
+    })}
+})
 
 
 router.get('/logout', function(req, res){
@@ -71,12 +78,13 @@ router.get('/logout', function(req, res){
 
 router.put('/update/:username', function(req, res){
     console.log(req.session)
-  let logIns = req.session.user.numLogIns+1
-  console.log(logIns)
-User.findOneAndUpdate({username: req.params.username}, {numLogIns: logIns}, {new:true}).exec( function(err, userData){
+//   let logIns = req.session.user.numLogIns+1
+//   console.log(logIns)
+User.findByIdAndUpdate(req.session.userId, { $inc: { numLogIns: 1 } }, {new:true}).exec( function(err, userData){
     if(err){
         return res.send(err)
     }
+    console.log(userData)
     res.send(userData)
 })
 })

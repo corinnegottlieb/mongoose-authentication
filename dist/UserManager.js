@@ -20,7 +20,7 @@ class UserManager {
         let userData = await $.get('/dashboard')
         this.user.username = this.toProperCase(userData.username)
         this.user.numLogIns = userData.numLogIns++
-        this.user.numLogIns > 1 ? this.user.first = false : null
+        this.user.numLogIns > 1 ? this.user.first = false : true
         console.log(this.user)
         $.ajax({
                     method: "PUT",
